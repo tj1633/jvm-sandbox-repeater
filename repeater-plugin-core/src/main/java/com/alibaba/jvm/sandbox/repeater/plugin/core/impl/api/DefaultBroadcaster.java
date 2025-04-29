@@ -61,7 +61,7 @@ public class DefaultBroadcaster extends AbstractBroadcaster {
     protected void broadcastRecord(RecordModel recordModel) {
         try {
             RecordWrapper wrapper = new RecordWrapper(recordModel);
-            String body = SerializerWrapper.hessianSerialize(wrapper);
+            String body = SerializerWrapper.jsonSerialize(wrapper);
             broadcast(broadcastRecordUrl, body, recordModel.getTraceId());
         } catch (SerializeException e) {
             log.error("broadcast record failed", e);
@@ -73,7 +73,7 @@ public class DefaultBroadcaster extends AbstractBroadcaster {
     @Override
     protected void broadcastRepeat(RepeatModel record) {
         try {
-            String body = SerializerWrapper.hessianSerialize(record);
+            String body = SerializerWrapper.jsonSerialize(record);
             broadcast(broadcastRepeatUrl, body, record.getTraceId());
         } catch (SerializeException e) {
             log.error("broadcast record failed", e);
@@ -122,7 +122,7 @@ public class DefaultBroadcaster extends AbstractBroadcaster {
         ClassLoader swap = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(DefaultBroadcaster.class.getClassLoader());
-            RecordWrapper wrapper = SerializerWrapper.hessianDeserialize(pr.getData(), RecordWrapper.class);
+            RecordWrapper wrapper = SerializerWrapper.jsonDeserialize(pr.getData(), RecordWrapper.class);
             SerializerWrapper.inTimeDeserialize(wrapper.getEntranceInvocation());
             if (meta.isMock() && CollectionUtils.isNotEmpty(wrapper.getSubInvocations())) {
                 for (Invocation invocation : wrapper.getSubInvocations()) {

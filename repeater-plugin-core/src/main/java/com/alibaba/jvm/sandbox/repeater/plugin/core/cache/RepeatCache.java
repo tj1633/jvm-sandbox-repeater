@@ -27,7 +27,7 @@ public class RepeatCache {
     private static final LoadingCache<String, RepeatContext> CONTEXT_CACHE = CacheBuilder
         .newBuilder()
         .maximumSize(4096)
-        .expireAfterWrite(30, TimeUnit.SECONDS)
+        .expireAfterWrite(300, TimeUnit.SECONDS)
         .build(new CacheLoader<String, RepeatContext>() {
             @Override
             public RepeatContext load(String s) throws Exception {
@@ -39,7 +39,7 @@ public class RepeatCache {
     private static final LoadingCache<String, List<MockInvocation>> MOCK_INVOCATION_CONTEXT = CacheBuilder
         .newBuilder()
         .maximumSize(4096)
-        .expireAfterWrite(30, TimeUnit.SECONDS)
+        .expireAfterWrite(300, TimeUnit.SECONDS)
         .build(new CacheLoader<String, List<MockInvocation>>() {
             @Override
             public List<MockInvocation> load(String s) throws Exception {

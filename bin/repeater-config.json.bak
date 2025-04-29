@@ -2,7 +2,7 @@
   "degrade": false,
   "exceptionThreshold": 1000,
   "httpEntrancePatterns": [
-    ".*"
+    "^/regress/.*$"
   ],
   "javaEntranceBehaviors": [
     {
@@ -38,13 +38,17 @@
   ],
   "pluginIdentities": [
     "http",
-    "okhttp",
-    "apache-http-client",
     "java-entrance",
-    "java-subInvoke"
+    "java-subInvoke",
+    "mybatis",
+    "ibatis",
+    "dubbo-provider",
+    "dubbo-consumer"
   ],
   "repeatIdentities": [
-    "http"
+    "java",
+    "http",
+    "dubbo"
   ],
   "sampleRate": 10000,
   "useTtl": true

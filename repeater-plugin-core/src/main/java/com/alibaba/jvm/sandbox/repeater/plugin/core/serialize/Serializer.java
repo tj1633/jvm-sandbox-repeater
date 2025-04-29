@@ -127,6 +127,7 @@ public interface Serializer {
         HESSIAN,
         JSON,
         JAVA,
+        JSON_STRING, //JSON类型会转成base64字符串; JSON_STRING类型会直接转成字符串
         NONE
     }
 }

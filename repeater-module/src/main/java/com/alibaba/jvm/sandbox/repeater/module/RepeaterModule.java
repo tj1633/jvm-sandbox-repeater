@@ -279,7 +279,7 @@ public class RepeaterModule implements Module, ModuleLifecycle {
                 writer.write("invalid request, cause parameter {" + Constants.DATA_TRANSPORT_IDENTIFY + "} is required");
                 return;
             }
-            RepeatMeta meta = SerializerProvider.instance().provide(Serializer.Type.JSON).deserialize(data, RepeatMeta.class);
+            RepeatMeta meta = SerializerProvider.instance().provide(Serializer.Type.JSON_STRING).deserialize(data, RepeatMeta.class);
             req.put(Constants.DATA_TRANSPORT_IDENTIFY, SerializerProvider.instance().provide(Serializer.Type.HESSIAN).serialize2String(meta));
             repeat(req, writer);
         } catch (Throwable e) {
@@ -301,7 +301,7 @@ public class RepeaterModule implements Module, ModuleLifecycle {
             return;
         }
         try {
-            RepeaterConfig config = SerializerWrapper.hessianDeserialize(data, RepeaterConfig.class);
+            RepeaterConfig config = SerializerWrapper.jsonDeserialize(data, RepeaterConfig.class);
             ApplicationModel.instance().setConfig(config);
             noticeConfigChange(config);
             writer.write("config push success");

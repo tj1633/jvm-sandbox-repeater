@@ -11,6 +11,7 @@ import com.alibaba.jvm.sandbox.repeater.plugin.domain.Invocation;
 import com.alibaba.jvm.sandbox.repeater.plugin.domain.InvokeType;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.io.Charsets;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
@@ -148,12 +149,12 @@ public class ApacheHttpClientProcessor extends DefaultInvocationProcessor {
         Class<?> aClass = classLoader.loadClass("org.apache.http.entity.ContentType");
         Object contentType = MethodUtils.invokeStaticMethod(aClass, "get", httpEntity);
         if (contentType == null) {
-            return StandardCharsets.UTF_8;
+            return Charsets.UTF_8;
         }
 
         Object charset = MethodUtils.invokeMethod(contentType, "getCharset");
         if (charset == null){
-            return StandardCharsets.UTF_8;
+            return Charsets.UTF_8;
         }
 
         return (Charset)charset;

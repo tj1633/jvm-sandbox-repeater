@@ -93,7 +93,7 @@ public class ReplayServiceImpl implements ReplayService {
     public RepeaterResult<String> saveRepeat(String body) {
         RepeatModel rm;
         try {
-            rm = SerializerWrapper.hessianDeserialize(body, RepeatModel.class);
+            rm = SerializerWrapper.jsonDeserialize(body, RepeatModel.class);
         } catch (SerializeException e) {
             log.error("error occurred when deserialize repeat model", e);
             return RepeaterResult.builder().message("operate failed").build();
@@ -162,7 +162,7 @@ public class ReplayServiceImpl implements ReplayService {
         meta.setStrategyType(MockStrategy.StrategyType.PARAMETER_MATCH);
         Map<String, String> requestParams = new HashMap<String, String>(2);
         try {
-            requestParams.put(Constants.DATA_TRANSPORT_IDENTIFY, SerializerWrapper.hessianSerialize(meta));
+            requestParams.put(Constants.DATA_TRANSPORT_IDENTIFY, SerializerWrapper.jsonSerialize(meta));
         } catch (SerializeException e) {
             return RepeaterResult.builder().success(false).message(e.getMessage()).build();
         }

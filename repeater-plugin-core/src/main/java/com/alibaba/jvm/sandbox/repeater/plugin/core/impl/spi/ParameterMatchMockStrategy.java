@@ -52,7 +52,7 @@ public class ParameterMatchMockStrategy extends AbstractMockStrategy {
         }
         String requestSerialized;
         try {
-            requestSerialized = SerializerWrapper.hessianSerialize(request.getArgumentArray(), request.getEvent().javaClassLoader);
+            requestSerialized = SerializerWrapper.jsonSerialize(request.getArgumentArray(), request.getEvent().javaClassLoader);
         } catch (Exception e) {
             log.error("serialize request occurred error, identity={}", type().name(), e);
             return SelectResult.builder().match(false).cost(stopwatch.stop().elapsed(TimeUnit.MILLISECONDS)).build();
@@ -114,7 +114,7 @@ public class ParameterMatchMockStrategy extends AbstractMockStrategy {
         String requestSerializedTarget;
         if (CollectionUtils.isNotEmpty(request.getModifiedInvocationIdentity()) &&
             request.getModifiedInvocationIdentity().contains(invocation.getIdentity())) {
-            requestSerializedTarget = SerializerWrapper.hessianSerialize(invocation.getRequest(),request.getEvent().javaClassLoader);
+            requestSerializedTarget = SerializerWrapper.jsonSerialize(invocation.getRequest(),request.getEvent().javaClassLoader);
         } else {
             requestSerializedTarget = invocation.getRequestSerialized();
         }

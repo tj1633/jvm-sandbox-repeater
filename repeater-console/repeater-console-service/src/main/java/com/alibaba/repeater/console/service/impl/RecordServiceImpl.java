@@ -48,7 +48,7 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public RepeaterResult<String> saveRecord(String body) {
         try {
-            RecordWrapper wrapper = SerializerWrapper.hessianDeserialize(body, RecordWrapper.class);
+            RecordWrapper wrapper = SerializerWrapper.jsonDeserialize(body, RecordWrapper.class);
             if (wrapper == null || StringUtils.isEmpty(wrapper.getAppName())) {
                 return RepeaterResult.builder().success(false).message("invalid request").build();
             }

@@ -31,7 +31,7 @@ public class Identity implements java.io.Serializable{
     private transient String endpoint;
     private transient Map<String, String> extra;
 
-    private Identity() {}
+    public Identity() {}
 
     public Identity(String scheme, String location, String endpoint, Map<String, String> extra) {
         this.scheme = scheme;
@@ -64,6 +64,10 @@ public class Identity implements java.io.Serializable{
     public String getUri() {
         updateIfNecessary();
         return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public String getScheme() {

@@ -1,11 +1,15 @@
 package com.alibaba.jvm.sandbox.repeater.plugin.core.wrapper;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.jvm.sandbox.repeater.plugin.core.bridge.ClassloaderBridge;
 import com.alibaba.jvm.sandbox.repeater.plugin.core.serialize.SerializeException;
 import com.alibaba.jvm.sandbox.repeater.plugin.core.serialize.Serializer.Type;
 import com.alibaba.jvm.sandbox.repeater.plugin.core.serialize.SerializerProvider;
 import com.alibaba.jvm.sandbox.repeater.plugin.domain.Invocation;
 import com.alibaba.jvm.sandbox.repeater.plugin.domain.RecordModel;
+
+import java.util.List;
 
 /**
  * {@link SerializerWrapper} 序列化工具；目标能够直接序列化{@link RecordModel}
@@ -25,7 +29,10 @@ public class SerializerWrapper {
      * @throws SerializeException 序列化异常
      */
     public static String jsonSerialize(Object object) throws SerializeException {
-        return provider.provide(Type.JSON).serialize2String(object);
+        return provider.provide(Type.JSON_STRING).serialize2String(object);
+    }
+    public static String jsonSerialize(Object object, ClassLoader classLoader) throws SerializeException {
+        return provider.provide(Type.JSON_STRING).serialize2String(object);
     }
 
     /**
@@ -38,7 +45,7 @@ public class SerializerWrapper {
      * @throws SerializeException 序列化异常
      */
     public static <T> T jsonDeserialize(String sequence, Class<T> tClass) throws SerializeException {
-        return provider.provide(Type.JSON).deserialize(sequence, tClass);
+        return provider.provide(Type.JSON_STRING).deserialize(sequence, tClass);
     }
 
     /**
@@ -48,9 +55,9 @@ public class SerializerWrapper {
      * @return 序列化字符串
      * @throws SerializeException 序列化异常
      */
-    public static String hessianSerialize(Object object) throws SerializeException {
-        return provider.provide(Type.HESSIAN).serialize2String(object);
-    }
+//    public static String hessianSerialize(Object object) throws SerializeException {
+//        return provider.provide(Type.HESSIAN).serialize2String(object);
+//    }
 
     /**
      * hessian序列化
@@ -59,9 +66,9 @@ public class SerializerWrapper {
      * @return 序列化字符串
      * @throws SerializeException 序列化异常
      */
-    public static String hessianSerialize(Object object, ClassLoader classLoader) throws SerializeException {
-        return provider.provide(Type.HESSIAN).serialize2String(object, classLoader);
-    }
+//    public static String hessianSerialize(Object object, ClassLoader classLoader) throws SerializeException {
+//        return provider.provide(Type.HESSIAN).serialize2String(object, classLoader);
+//    }
 
     /**
      * hessian反序列化
@@ -72,9 +79,9 @@ public class SerializerWrapper {
      * @return 反序列化后的对象
      * @throws SerializeException 序列化异常
      */
-    public static <T> T hessianDeserialize(String sequence, Class<T> tClass) throws SerializeException {
-        return provider.provide(Type.HESSIAN).deserialize(sequence, tClass);
-    }
+//    public static <T> T hessianDeserialize(String sequence, Class<T> tClass) throws SerializeException {
+//        return provider.provide(Type.HESSIAN).deserialize(sequence, tClass);
+//    }
 
     /**
      * hessian反序列化
@@ -83,9 +90,9 @@ public class SerializerWrapper {
      * @return 反序列化后的对象
      * @throws SerializeException 序列化异常
      */
-    public static Object hessianDeserialize(String sequence) throws SerializeException {
-        return provider.provide(Type.HESSIAN).deserialize(sequence);
-    }
+//    public static Object hessianDeserialize(String sequence) throws SerializeException {
+//        return provider.provide(Type.HESSIAN).deserialize(sequence);
+//    }
 
     /**
      * 及时序列化
@@ -94,15 +101,15 @@ public class SerializerWrapper {
      */
     public static void inTimeSerialize(Invocation invocation) throws SerializeException {
         if (invocation.getResponse() != null && invocation.getResponseSerialized() == null) {
-            invocation.setResponseSerialized(provider.provide(Type.HESSIAN)
+            invocation.setResponseSerialized(provider.provide(Type.JSON_STRING)
                     .serialize2String(invocation.getResponse(), invocation.getClassLoader()));
         }
         if (invocation.getRequest() != null && invocation.getRequestSerialized() == null) {
-            invocation.setRequestSerialized(provider.provide(Type.HESSIAN)
+            invocation.setRequestSerialized(provider.provide(Type.JSON_STRING)
                     .serialize2String(invocation.getRequest(), invocation.getClassLoader()));
         }
         if (invocation.getThrowable() != null && invocation.getThrowableSerialized() == null) {
-            invocation.setThrowableSerialized(provider.provide(Type.HESSIAN)
+            invocation.setThrowableSerialized(provider.provide(Type.JSON_STRING)
                     .serialize2String(invocation.getThrowable(), invocation.getClassLoader()));
         }
     }
@@ -114,15 +121,18 @@ public class SerializerWrapper {
      */
     public static void inTimeDeserialize(Invocation invocation) throws SerializeException {
         if (invocation.getRequest() == null && invocation.getRequestSerialized() != null) {
-            invocation.setRequest((Object[]) provider.provide(Type.HESSIAN).deserialize(invocation.getRequestSerialized(), null,
-                    ClassloaderBridge.instance().decode(invocation.getSerializeToken())));
+            final JSONArray jsonArray = provider.provide(Type.JSON_STRING).deserialize(invocation.getRequestSerialized(), null,
+                    ClassloaderBridge.instance().decode(invocation.getSerializeToken()));
+            invocation.setRequest(jsonArray.toArray());
         }
         if (invocation.getResponse() == null && invocation.getResponseSerialized() != null) {
-            invocation.setResponse(provider.provide(Type.HESSIAN).deserialize(invocation.getResponseSerialized(), null,
-                    ClassloaderBridge.instance().decode(invocation.getSerializeToken())));
+            final Object
+                    object = provider.provide(Type.JSON_STRING).deserialize(invocation.getResponseSerialized(), null,
+                    ClassloaderBridge.instance().decode(invocation.getSerializeToken()));
+            invocation.setResponse(object);
         }
         if (invocation.getThrowable() == null && invocation.getThrowableSerialized() != null) {
-            invocation.setThrowable((Throwable) provider.provide(Type.HESSIAN).deserialize(invocation.getThrowableSerialized(), null,
+            invocation.setThrowable((Throwable) provider.provide(Type.JSON_STRING).deserialize(invocation.getThrowableSerialized(), null,
                     ClassloaderBridge.instance().decode(invocation.getSerializeToken())));
         }
     }

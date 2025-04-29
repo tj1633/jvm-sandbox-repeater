@@ -17,6 +17,8 @@ public class InvokeType implements java.io.Serializable {
 
     public static InvokeType IBATIS = new InvokeType("ibatis");
 
+    public static InvokeType ELASTICSEARCH = new InvokeType("elasticsearch");
+
     public static InvokeType REDIS = new InvokeType("redis");
 
     public static InvokeType DUBBO = new InvokeType("dubbo");

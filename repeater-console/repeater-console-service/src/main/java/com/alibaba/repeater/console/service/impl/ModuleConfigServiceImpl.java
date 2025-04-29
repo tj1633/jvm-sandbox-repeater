@@ -109,7 +109,7 @@ public class ModuleConfigServiceImpl implements ModuleConfigService {
         String data;
         try {
             RepeaterConfig config = JacksonUtil.deserialize(moduleConfig.getConfig(),RepeaterConfig.class);
-            data = SerializerWrapper.hessianSerialize(config);
+            data = SerializerWrapper.jsonSerialize(config);
         } catch (SerializeException e) {
             return ResultHelper.fail("serialize config occurred error, message = " + e.getMessage());
         }

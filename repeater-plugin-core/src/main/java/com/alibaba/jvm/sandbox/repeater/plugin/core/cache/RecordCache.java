@@ -10,6 +10,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
 
 /**
  * {@link RecordCache} 录制缓存
@@ -18,11 +19,11 @@ import com.google.common.collect.Lists;
  * @author zhaoyb1990
  */
 public class RecordCache {
-
+    private final static Logger log = org.slf4j.LoggerFactory.getLogger(RecordCache.class);
     private static final LoadingCache<Integer, Invocation> INVOCATION_CACHE = CacheBuilder
             .newBuilder()
             .maximumSize(4096)
-            .expireAfterWrite(30, TimeUnit.SECONDS)
+            .expireAfterWrite(600, TimeUnit.SECONDS)
             .build(new CacheLoader<Integer, Invocation>() {
                 @Override
                 public Invocation load(Integer s) throws Exception {
@@ -33,10 +34,10 @@ public class RecordCache {
     private static final LoadingCache<String, List<Invocation>> SUB_INVOCATION_CACHE = CacheBuilder
             .newBuilder()
             .maximumSize(4096)
-            .expireAfterWrite(30, TimeUnit.SECONDS)
+            .expireAfterWrite(600, TimeUnit.SECONDS)
             .build(new CacheLoader<String, List<Invocation>>() {
                 @Override
-                public List<Invocation> load(String s){
+                public List<Invocation> load(String s) {
                     return Lists.newArrayList();
                 }
             });
@@ -49,6 +50,7 @@ public class RecordCache {
      */
     public static void cacheInvocation(int invokeId, Invocation invocation) {
         INVOCATION_CACHE.put(invokeId, invocation);
+        final Invocation ifPresent = INVOCATION_CACHE.getIfPresent(invokeId);
     }
 
     /**
@@ -58,7 +60,8 @@ public class RecordCache {
      * @return 调用
      */
     public static Invocation getInvocation(int invokeId) {
-        return INVOCATION_CACHE.getIfPresent(invokeId);
+        Invocation invocation = INVOCATION_CACHE.getIfPresent(invokeId);
+        return invocation;
     }
 
     /**
@@ -75,7 +78,7 @@ public class RecordCache {
     }
 
     public static List<Invocation> getSubInvocation(String traceId) {
-        try{
+        try {
             return SUB_INVOCATION_CACHE.getIfPresent(traceId);
         } finally {
             SUB_INVOCATION_CACHE.invalidate(traceId);
