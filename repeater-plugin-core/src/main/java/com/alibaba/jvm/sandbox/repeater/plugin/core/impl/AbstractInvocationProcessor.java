@@ -83,7 +83,8 @@ public abstract class AbstractInvocationProcessor implements InvocationProcessor
                         ProcessControlException.throwThrowsImmediately(mr.throwable);
                         break;
                     case RETURN_IMMEDIATELY:
-                        ProcessControlException.throwReturnImmediately(assembleMockResponse(event, mr.invocation));
+                        Object object = assembleMockResponse(event, mr.invocation);
+                        ProcessControlException.throwReturnImmediately(object);
                         break;
                     default:
                         ProcessControlException.throwThrowsImmediately(new RepeatException("invalid action"));

@@ -39,6 +39,7 @@
   "pluginIdentities": [
     "http",
     "okhttp",
+    "elasticsearch",
     "apache-http-client",
     "java-entrance",
     "java-subInvoke"

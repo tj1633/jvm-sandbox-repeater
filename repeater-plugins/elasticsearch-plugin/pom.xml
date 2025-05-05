@@ -10,7 +10,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>elasticsearch-plugin</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-client</artifactId>
+            <scope>provided</scope>
+            <version>7.17.15</version>
+        </dependency>
+    </dependencies>
     <build>
         <finalName>${project.name}-${project.version}</finalName>
         <plugins>

@@ -24,6 +24,7 @@ cp ./repeater-logback.xml ${REPEATER_TARGET_DIR}/cfg/repeater-logback.xml \
     && cp ../repeater-module/target/repeater-module-*-jar-with-dependencies.jar ${REPEATER_TARGET_DIR}/repeater-module.jar \
     && cp ../repeater-console/repeater-console-start/target/repeater-console.jar ${REPEATER_TARGET_DIR}/repeater-bootstrap.jar \
     && cp ../repeater-plugins/ibatis-plugin/target/ibatis-plugin-*-jar-with-dependencies.jar ${REPEATER_TARGET_DIR}/plugins/ibatis-plugin.jar \
+    && cp ../repeater-plugins/elasticsearch-plugin/target/elasticsearch-plugin-*-jar-with-dependencies.jar ${REPEATER_TARGET_DIR}/plugins/elasticsearch-plugin.jar \
     && cp ../repeater-plugins/java-plugin/target/java-plugin-*-jar-with-dependencies.jar ${REPEATER_TARGET_DIR}/plugins/java-plugin.jar \
     && cp ../repeater-plugins/mybatis-plugin/target/mybatis-plugin-*-jar-with-dependencies.jar ${REPEATER_TARGET_DIR}/plugins/mybatis-plugin.jar \
     && cp ../repeater-plugins/dubbo-plugin/target/dubbo-plugin-*-jar-with-dependencies.jar ${REPEATER_TARGET_DIR}/plugins/dubbo-plugin.jar \
@@ -35,6 +36,7 @@ cp ./repeater-logback.xml ${REPEATER_TARGET_DIR}/cfg/repeater-logback.xml \
 
 cp ${REPEATER_TARGET_DIR}/repeater-module.jar ~/.sandbox-module/
 cp ${REPEATER_TARGET_DIR}/plugins/* ~/.sandbox-module/plugins/
+cp ${REPEATER_TARGET_DIR}/cfg/* ~/.sandbox-module/cfg/
 
 # tar the repeater.tar
 cd ../target/
