@@ -15,6 +15,7 @@
         <module>ibatis-plugin</module>
         <module>java-plugin</module>
         <module>http-plugin</module>
+        <module>jakarta-servlet-plugin</module>
         <module>dubbo-plugin</module>
         <module>redis-plugin</module>
         <module>hibernate-plugin</module>

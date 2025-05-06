@@ -9,6 +9,8 @@ package com.alibaba.jvm.sandbox.repeater.plugin.domain;
  */
 public class InvokeType implements java.io.Serializable {
 
+    public static InvokeType JAKARTA_SERVLET = new InvokeType("jakarta-servlet");
+
     public static InvokeType HTTP = new InvokeType("http");
 
     public static InvokeType JAVA = new InvokeType("java");

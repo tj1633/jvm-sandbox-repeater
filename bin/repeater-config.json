@@ -37,15 +37,12 @@
     }
   ],
   "pluginIdentities": [
-    "http",
+    "jakarta-servlet",
     "okhttp",
-    "elasticsearch",
-    "apache-http-client",
-    "java-entrance",
-    "java-subInvoke"
+    "elasticsearch"
   ],
   "repeatIdentities": [
-    "http"
+    "jakarta-servlet"
   ],
   "sampleRate": 10000,
   "useTtl": true

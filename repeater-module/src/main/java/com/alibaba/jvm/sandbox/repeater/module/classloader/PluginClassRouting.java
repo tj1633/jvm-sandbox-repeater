@@ -64,21 +64,13 @@ public class PluginClassRouting {
     public static PluginClassLoader.Routing[] wellKnownRouting(boolean isPreloading, Long timeout) {
         // http插件对servlet-api路由
         PluginClassRouting httpPluginRouting = PluginClassRouting.builder()
-                .targetClass("javax.servlet.http.HttpServlet")
-                .classPattern("^javax.servlet..*")
-                .identity("http")
+                .targetClass("jakarta.servlet.http.HttpServlet")
+                .classPattern("^jakarta.servlet..*")
+                .identity("jakarta-servlet")
                 .matcher(Matcher.PLUGIN)
                 .block(true)
                 .build();
-        // dubbo回放器中对dubbo框架路由
-        PluginClassRouting dubboRepeaterRouting = PluginClassRouting.builder()
-                .targetClass("org.apache.dubbo.rpc.model.ApplicationModel")
-                .classPattern("^org.apache.dubbo..*")
-                .identity("dubbo")
-                .matcher(Matcher.REPEATER)
-                .block(false)
-                .build();
-        return transformRouting(Lists.newArrayList(httpPluginRouting, dubboRepeaterRouting), isPreloading, timeout);
+        return transformRouting(Lists.newArrayList(httpPluginRouting), isPreloading, timeout);
     }
 
     /**
