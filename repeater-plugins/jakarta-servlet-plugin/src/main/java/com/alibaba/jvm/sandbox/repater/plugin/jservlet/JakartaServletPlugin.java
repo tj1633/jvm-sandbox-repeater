@@ -1,4 +1,4 @@
-package com.alibaba.jvm.sandbox.repater.plugin.http;
+package com.alibaba.jvm.sandbox.repater.plugin.jservlet;
 
 import com.alibaba.jvm.sandbox.api.event.Event;
 import com.alibaba.jvm.sandbox.api.listener.EventListener;
@@ -14,25 +14,24 @@ import org.kohsuke.MetaInfServices;
 import java.util.List;
 
 /**
- * {@link HttpPlugin} http入口流量类型插件
+ * {@link } http入口流量类型插件
  * <p>
  *
- * @author zhaoyb1990
  */
 @MetaInfServices(InvokePlugin.class)
-public class HttpPlugin extends AbstractInvokePluginAdapter {
+public class JakartaServletPlugin extends AbstractInvokePluginAdapter {
 
     @Override
     protected List<EnhanceModel> getEnhanceModels() {
         // 拦截javax.servlet.http.HttpServlet#service(HttpServletRequest req, HttpServletResponse resp)
         EnhanceModel.MethodPattern mp = EnhanceModel.MethodPattern.builder()
                 .methodName("service")
-//                .parameterType(new String[]{"jakarta.servlet.http.HttpServletRequest", "jakarta.servlet.http.HttpServletResponse"})
+                .parameterType(new String[]{"jakarta.servlet.http.HttpServletRequest", "jakarta.servlet.http.HttpServletResponse"})
                 .build();
         EnhanceModel em = EnhanceModel.builder()
                 .classPattern("jakarta.servlet.http.HttpServlet")
-//                .methodPatterns(new EnhanceModel.MethodPattern[]{mp})
-                .methodPatterns(EnhanceModel.MethodPattern.transform("service","doPost","getAll","getIfPresent"))
+                .methodPatterns(new EnhanceModel.MethodPattern[]{mp})
+//                .methodPatterns(EnhanceModel.MethodPattern.transform("service"))
                 .watchTypes(Event.Type.BEFORE, Event.Type.RETURN, Event.Type.THROWS)
                 .build();
         return Lists.newArrayList(em);
@@ -58,7 +57,7 @@ public class HttpPlugin extends AbstractInvokePluginAdapter {
 
     @Override
     public String identity() {
-        return "http";
+        return "jakarta-servlet";
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.alibaba.jvm.sandbox.repeater.plugin.core.serialize;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.jvm.sandbox.repeater.plugin.domain.Identity;
 import com.google.common.base.Charsets;
@@ -8,6 +9,9 @@ import com.google.common.io.BaseEncoding;
 import org.kohsuke.MetaInfServices;
 
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @MetaInfServices(Serializer.class)
 public class JSonStringSerializer implements Serializer {
@@ -105,16 +109,30 @@ public class JSonStringSerializer implements Serializer {
         }
     }
 
+    public static class Holder{
+        public Holder(byte[] bytes) {
+            this.bytes = bytes;
+        }
+
+        public byte[] bytes;
+    }
+
     public static void main(String[] args) {
         JSonStringSerializer serializer = new JSonStringSerializer();
-        Identity identity = new Identity("川普", "127.0.0.1", "127.0.0.1", null);
+        Map<String, Object> map = new HashMap<String, Object>(10);
+        map.put("p1", new Holder(new byte[]{1,2,3}));
         try {
-            byte[] bytes = serializer.serialize(identity);
+            byte[] bytes = serializer.serialize(map);
             System.out.println(new String(bytes, Charsets.UTF_8));
-            Identity identity1 = serializer.deserialize(bytes, Identity.class);
-            System.out.println(identity1.getScheme());
+            Map<String, Object> map1 = serializer.deserialize(bytes, Map.class);
+            JSONObject ret = (JSONObject)map1.get("p1");
+            System.out.println(ret.get("bytes"));
+            final String bytes1 = (String)ret.get("bytes");
+            System.out.println(Arrays.toString(BaseEncoding.base64().decode(bytes1)));
         } catch (SerializeException e) {
             e.printStackTrace();
         }
+        byte[] a = new byte[]{1,2,3};
+        System.out.println(a.getClass().getName());
     }
 }

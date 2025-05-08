@@ -1,4 +1,4 @@
-package com.alibaba.jvm.sandbox.repater.plugin.http.wrapper;
+package com.alibaba.jvm.sandbox.repater.plugin.jservlet.wrapper;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.WriteListener;
@@ -10,7 +10,6 @@ import java.io.OutputStream;
 /**
  * <p>
  *
- * @author zhaoyb1990
  */
 public class WrapperOutputStreamCopier extends ServletOutputStream {
 

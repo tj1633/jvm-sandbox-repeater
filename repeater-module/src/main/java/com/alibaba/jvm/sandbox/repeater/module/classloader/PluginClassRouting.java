@@ -63,14 +63,22 @@ public class PluginClassRouting {
      */
     public static PluginClassLoader.Routing[] wellKnownRouting(boolean isPreloading, Long timeout) {
         // http插件对servlet-api路由
-        PluginClassRouting httpPluginRouting = PluginClassRouting.builder()
+        PluginClassRouting jakartaServletPluginRouting = PluginClassRouting.builder()
                 .targetClass("jakarta.servlet.http.HttpServlet")
                 .classPattern("^jakarta.servlet..*")
                 .identity("jakarta-servlet")
                 .matcher(Matcher.PLUGIN)
                 .block(true)
                 .build();
-        return transformRouting(Lists.newArrayList(httpPluginRouting), isPreloading, timeout);
+        PluginClassRouting httpPluginRouting = PluginClassRouting.builder()
+                .targetClass("javax.servlet.http.HttpServlet")
+                .classPattern("^javax.servlet..*")
+                .identity("http")
+                .matcher(Matcher.PLUGIN)
+                .block(true)
+                .build();
+        return transformRouting(Lists.newArrayList( httpPluginRouting, jakartaServletPluginRouting), isPreloading,
+                timeout);
     }
 
     /**
@@ -107,15 +115,18 @@ public class PluginClassRouting {
      * @param timeout      超时时间(s)
      * @return 特殊路由列表
      */
-    private static PluginClassLoader.Routing transformRouting(PluginClassRouting routing, boolean isPreloading, Long timeout) {
+    private static PluginClassLoader.Routing transformRouting(PluginClassRouting routing, boolean isPreloading,
+                                                              Long timeout) {
         PluginClassLoader.Routing target = null;
         // 100ms
         timeout = timeout * 10;
         if (routing.match()) {
-            while (isPreloading && --timeout > 0 && ClassloaderBridge.instance().findClassInstances(routing.targetClass).size() == 0) {
+            while (isPreloading && --timeout > 0 &&
+                    ClassloaderBridge.instance().findClassInstances(routing.targetClass).size() == 0) {
                 try {
                     Thread.sleep(100);
-                    LogUtil.info("{} required {} class router,waiting for class loading", routing.identity, routing.targetClass);
+                    LogUtil.info("{} required {} class router,waiting for class loading", routing.identity,
+                            routing.targetClass);
                 } catch (InterruptedException e) {
                     // ignore
                 }
@@ -124,7 +135,8 @@ public class PluginClassRouting {
         List<Class<?>> instances = ClassloaderBridge.instance().findClassInstances(routing.targetClass);
         // ensure only one classloader will be found
         if (instances.size() > 1 && routing.block) {
-            throw new RuntimeException("found multiple" + routing.targetClass + "loaded in container, can't use start repeater with special routing.");
+            throw new RuntimeException("found multiple" + routing.targetClass +
+                    "loaded in container, can't use start repeater with special routing.");
         } else if (instances.size() == 1) {
             Class<?> aClass = instances.get(0);
             target = new PluginClassLoader.Routing(aClass.getClassLoader(), routing.classPattern);

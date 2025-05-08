@@ -1,4 +1,4 @@
-package com.alibaba.jvm.sandbox.repater.plugin.http.wrapper;
+package com.alibaba.jvm.sandbox.repater.plugin.jservlet.wrapper;
 
 import org.apache.commons.collections4.MapUtils;
 
@@ -10,7 +10,6 @@ import java.util.Map;
 /**
  * <p>
  *
- * @author zhaoyb1990
  */
 public class WrapperTransModel {
 

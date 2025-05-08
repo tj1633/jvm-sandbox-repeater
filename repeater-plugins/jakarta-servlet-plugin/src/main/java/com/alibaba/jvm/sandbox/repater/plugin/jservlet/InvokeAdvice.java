@@ -1,8 +1,8 @@
-package com.alibaba.jvm.sandbox.repater.plugin.http;
+package com.alibaba.jvm.sandbox.repater.plugin.jservlet;
 
 import com.alibaba.jvm.sandbox.api.event.BeforeEvent;
-import com.alibaba.jvm.sandbox.repater.plugin.http.wrapper.WrapperRequest;
-import com.alibaba.jvm.sandbox.repater.plugin.http.wrapper.WrapperTransModel;
+import com.alibaba.jvm.sandbox.repater.plugin.jservlet.wrapper.WrapperRequest;
+import com.alibaba.jvm.sandbox.repater.plugin.jservlet.wrapper.WrapperTransModel;
 
 import javax.servlet.AsyncContext;
 
@@ -10,7 +10,6 @@ import javax.servlet.AsyncContext;
  * {@link InvokeAdvice} http请求感知；包含同步/异步调用
  * <p>
  *
- * @author zhaoyb1990
  */
 public interface InvokeAdvice {
 

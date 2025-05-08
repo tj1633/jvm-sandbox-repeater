@@ -1,4 +1,4 @@
-package com.alibaba.jvm.sandbox.repater.plugin.http;
+package com.alibaba.jvm.sandbox.repater.plugin.jservlet;
 
 import com.alibaba.jvm.sandbox.repeater.plugin.Constants;
 import com.alibaba.jvm.sandbox.repeater.plugin.core.impl.AbstractRepeater;
@@ -16,13 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * {@link HttpRepeater} HTTP类型入口回放器;
+ * {@link } HTTP类型入口回放器;
  * <p>
  *
- * @author zhaoyb1990
  */
 @MetaInfServices(Repeater.class)
-public class HttpRepeater extends AbstractRepeater {
+public class JakartaServletRepeater extends AbstractRepeater {
 
     @Override
     protected Object executeRepeat(RepeatContext context) throws Exception {

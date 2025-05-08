@@ -37,11 +37,15 @@
     }
   ],
   "pluginIdentities": [
+    "http",
     "jakarta-servlet",
     "okhttp",
+    "guava-cache",
+    "ckv",
     "elasticsearch"
   ],
   "repeatIdentities": [
+    "http",
     "jakarta-servlet"
   ],
   "sampleRate": 10000,

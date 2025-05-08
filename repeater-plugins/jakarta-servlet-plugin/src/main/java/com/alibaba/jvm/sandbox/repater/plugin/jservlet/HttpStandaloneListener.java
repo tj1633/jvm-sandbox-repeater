@@ -1,13 +1,13 @@
-package com.alibaba.jvm.sandbox.repater.plugin.http;
+package com.alibaba.jvm.sandbox.repater.plugin.jservlet;
 
 import com.alibaba.jvm.sandbox.api.ProcessControlException;
 import com.alibaba.jvm.sandbox.api.event.BeforeEvent;
 import com.alibaba.jvm.sandbox.api.event.Event;
 import com.alibaba.jvm.sandbox.api.event.ReturnEvent;
 import com.alibaba.jvm.sandbox.api.event.ThrowsEvent;
-import com.alibaba.jvm.sandbox.repater.plugin.http.wrapper.WrapperRequest;
-import com.alibaba.jvm.sandbox.repater.plugin.http.wrapper.WrapperResponseCopier;
-import com.alibaba.jvm.sandbox.repater.plugin.http.wrapper.WrapperTransModel;
+import com.alibaba.jvm.sandbox.repater.plugin.jservlet.wrapper.WrapperRequest;
+import com.alibaba.jvm.sandbox.repater.plugin.jservlet.wrapper.WrapperResponseCopier;
+import com.alibaba.jvm.sandbox.repater.plugin.jservlet.wrapper.WrapperTransModel;
 import com.alibaba.jvm.sandbox.repeater.plugin.Constants;
 import com.alibaba.jvm.sandbox.repeater.plugin.api.InvocationListener;
 import com.alibaba.jvm.sandbox.repeater.plugin.api.InvocationProcessor;
@@ -37,7 +37,6 @@ import java.util.Map;
  * {@link HttpStandaloneListener} 继承 {@link DefaultEventListener}但是由于http有同步异步两种策略，因此需要重写一些方法
  * <p>
  *
- * @author zhaoyb1990
  */
 public class HttpStandaloneListener extends DefaultEventListener implements InvokeAdvice {
 

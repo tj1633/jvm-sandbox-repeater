@@ -1,6 +1,6 @@
-package com.alibaba.jvm.sandbox.repater.plugin.http.wrapper;
+package com.alibaba.jvm.sandbox.repater.plugin.jservlet.wrapper;
 
-import com.alibaba.jvm.sandbox.repater.plugin.http.HttpStandaloneListener;
+import com.alibaba.jvm.sandbox.repater.plugin.jservlet.HttpStandaloneListener;
 import jakarta.servlet.ReadListener;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +17,6 @@ import java.io.*;
 /**
  * <p>
  *
- * @author zhaoyb1990
  */
 public class WrapperRequest extends HttpServletRequestWrapper {
 

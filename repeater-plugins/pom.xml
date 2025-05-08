@@ -27,6 +27,7 @@
         <module>guava-cache-plugin</module>
         <module>okhttp-plugin</module>
         <module>elasticsearch-plugin</module>
+        <module>ckv-plugin</module>
     </modules>
 
     <dependencies>

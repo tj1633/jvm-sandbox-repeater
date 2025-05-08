@@ -1,6 +1,6 @@
-package com.alibaba.jvm.sandbox.repater.plugin.http.wrapper;
+package com.alibaba.jvm.sandbox.repater.plugin.jservlet.wrapper;
 
-import com.alibaba.jvm.sandbox.repater.plugin.http.HttpStandaloneListener;
+import com.alibaba.jvm.sandbox.repater.plugin.jservlet.HttpStandaloneListener;
 
 import jakarta.servlet.AsyncEvent;
 import jakarta.servlet.AsyncListener;
@@ -9,7 +9,6 @@ import java.io.IOException;
 /**
  * <p>
  *
- * @author zhaoyb1990
  */
 public class WrapperAsyncListener implements AsyncListener {
 
